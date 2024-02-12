@@ -13,7 +13,7 @@ columns = ['NSAID', 'RAdeg-gal', 'DEdeg-gal', 'RAdeg-spec', 'DEdeg-spec', 'Sep',
 
 rows = []
 gal = []
-with open('Molina_Dwarf_sample.txt', 'r') as prop:
+with open('Molina2021_Dwarf_sample.txt', 'r') as prop:
 
     for line_number, line in enumerate(prop):
         if line_number > 43:
@@ -39,31 +39,28 @@ for o in range(len(RA_gal)):
 
 url = 'https://sundog.stsci.edu/cgi-bin/searchfirst'
 
-# using selenium to serach for our query
-driver = webdriver.Chrome()
-driver.get(url)
-driver.implicitly_wait(10)
-# driver.maximize_window()
 
-# time.sleep(1)
-# print(driver.title)
+for i in range(len(galaxy)):
+    # using selenium to serach for our query
+    driver = webdriver.Chrome()
+    
+    driver.get(url)
 
-# frame = driver.find_elements_by_tag_name('input')
+    driver.find_element(By.XPATH, '//input[@id="pos"]').clear()
+    form_radec = driver.find_element(By.XPATH, '//input[@id="pos"]').send_keys(galaxy[i])
 
-
-driver.find_element(By.XPATH, '//input[@id="pos"]').clear()
-time.sleep(1)
-form_radec = driver.find_element(By.XPATH, '//input[@id="pos"]').send_keys(galaxy[0])
-
-time.sleep(1)
+    buttom = driver.find_element(By.XPATH, '//input[@type="submit"]')
+    buttom.click()
 
 
+    elements = driver.find_element(By.TAG_NAME, 'pre')
+    
+    if 'Position is not in the area currently covered by the FIRST catalog' not in elements.text:
+        print(galaxy[i])
 
 
 
-# label = driver.find_element(By.CSS_SELECTOR, 'label[for="RA"]')
-
-driver.quit()
+    driver.quit()
 
 
 # def search_galaxy(position):
