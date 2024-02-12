@@ -1,1 +1,1 @@
-# Checking for radio galaxis on FIRST Catalog
+# Checking for radio galaxies on FIRST Catalog
